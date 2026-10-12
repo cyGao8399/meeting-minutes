@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会议纪要整理器 · Meeting Minutes</title>
+  <meta name="description" content="粘贴杂乱的会议记录，一键生成结构化会议纪要。纯前端、零依赖、离线可用，数据不出本机。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <h1>📝 会议纪要整理器</h1>
+      <p class="tagline">粘贴杂乱记录 → 一键生成结构化纪要（议题 / 结论 / 待办 / 负责人 / 截止日期）</p>
+      <p class="badge-line">
+        <span class="badge">纯前端</span>
+        <span class="badge">零依赖</span>
+        <span class="badge">离线可用</span>
+        <span class="badge">数据不出本机</span>
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 左侧：原始记录输入 -->
+    <section class="panel input-panel">
+      <div class="panel-header">
+        <h2>原始会议记录</h2>
+        <div class="panel-actions">
+          <button id="btn-sample" class="btn btn-ghost" type="button">填入示例</button>
+          <button id="btn-clear" class="btn btn-ghost" type="button">清空</button>
+        </div>
+      </div>
+      <textarea id="raw-input" placeholder="把会议记录直接粘贴进来即可，支持口语化文本，例如：
+
+主题：Q4 产品迭代计划评审
+议题1：新版首页上线时间
+结论：同意 11 月 1 日灰度发布
+待办：@张三 准备灰度方案 10月20日
+TODO：@李四 整理用户反馈，下周三前
+@王五 跟进埋点数据 2026-10-25"></textarea>
+      <div class="input-hint">
+        <span>提示：识别「主题 / 议题 / 结论 / 待办 / TODO」开头，自动提取 @负责人 与截止日期。</span>
+      </div>
+      <button id="btn-parse" class="btn btn-primary btn-block" type="button">生成结构化纪要 →</button>
+    </section>
+
+    <!-- 右侧：结果输出 -->
+    <section class="panel output-panel">
+      <div class="panel-header">
+        <h2>结构化纪要</h2>
+        <div class="panel-actions">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-tab="edit" type="button">编辑</button>
+            <button class="tab" data-tab="preview" type="button">Markdown 预览</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats" id="stats" hidden>
+        <span class="stat-chip">议题 <b id="stat-topic">0</b></span>
+        <span class="stat-chip">结论 <b id="stat-decision">0</b></span>
+        <span class="stat-chip">待办 <b id="stat-action">0</b></span>
+      </div>
+
+      <!-- 编辑视图 -->
+      <div id="view-edit" class="view">
+        <div id="edit-empty" class="empty-state">点击「生成结构化纪要」后，这里会显示可编辑的纪要内容。</div>
+        <div id="edit-content" hidden>
+          <div class="field-row">
+            <label for="md-title">会议主题</label>
+            <input id="md-title" type="text" placeholder="未识别到主题">
+          </div>
+
+          <div class="edit-section" data-section="topics">
+            <div class="section-header">
+              <h3>📌 议题</h3>
+              <button class="btn btn-small btn-ghost add-item" type="button">+ 添加</button>
+            </div>
+            <ul class="item-list" id="list-topics"></ul>
+          </div>
+
+          <div class="edit-section" data-section="decisions">
+            <div class="section-header">
+              <h3>✅ 结论</h3>
+              <button class="btn btn-small btn-ghost add-item" type="button">+ 添加</button>
+            </div>
+            <ul class="item-list" id="list-decisions"></ul>
+          </div>
+
+          <div class="edit-section" data-section="actions">
+            <div class="section-header">
+              <h3>🚀 待办事项</h3>
+              <button class="btn btn-small btn-ghost add-item" type="button">+ 添加</button>
+            </div>
+            <ul class="item-list" id="list-actions"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Markdown 预览视图 -->
+      <div id="view-preview" class="view" hidden>
+        <pre id="md-output" class="md-output"></pre>
+      </div>
+
+      <div class="output-actions">
+        <button id="btn-copy" class="btn btn-primary" type="button" disabled>📋 复制 Markdown</button>
+        <button id="btn-download" class="btn btn-ghost" type="button" disabled>⬇️ 下载 .md</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <footer class="app-footer">
+    <p>开源 · MIT License · 所有数据仅在本机浏览器内处理，不发送到任何服务器</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
