@@ -16,7 +16,7 @@
 - 开源协议 MIT，项目结构清晰（index.html / css / js / README / LICENSE）
 
 **项目链接**：
-- GitHub 仓库：https://github.com/<你的用户名>/meeting-minutes
-- 在线演示（GitHub Pages）：https://<你的用户名>.github.io/meeting-minutes/
+- GitHub 仓库：https://github.com/cyGao8399/meeting-minutes
+- 在线演示（GitHub Pages）：https://cygao8399.github.io/meeting-minutes/
 
 > 使用方式：粘贴会议记录 → 点击「生成结构化纪要」→ 编辑确认 → 复制/下载 Markdown。

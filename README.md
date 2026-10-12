@@ -36,7 +36,7 @@ npx serve .
 
 **方式三：在线演示**
 
-通过 GitHub Pages 访问：（发布后在仓库 Settings → Pages 中获取链接）
+直接访问 GitHub Pages：<https://cygao8399.github.io/meeting-minutes/>
 
 ## 📝 使用说明
 
